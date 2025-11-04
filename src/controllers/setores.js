@@ -1,6 +1,7 @@
 const db = require('../dataBase/connection');
 
 module.exports = {
+//------------ Listar Setores -------------
 async listarSetores(request, response) {
     try{
         return response.status(200).json(
@@ -21,6 +22,7 @@ async listarSetores(request, response) {
     }
     },
 
+// ------------ Cadastrar Setores -------------
     async cadastrarSetores(request, response) {
     try{
         return response.status(200).json(
@@ -41,6 +43,7 @@ async listarSetores(request, response) {
     }
     },
 
+    // ------------ Editar Setores -------------
     async editarSetores(request, response) {
     try{
         return response.status(200).json(
@@ -61,6 +64,7 @@ async listarSetores(request, response) {
     }
     },
 
+    // ------------ Apagar Setores -------------
     async apagarSetores(request, response) {
     try{
         return response.status(200).json(
