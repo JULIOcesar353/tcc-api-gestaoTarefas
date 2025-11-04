@@ -1,7 +1,7 @@
 const db = requiere('../dataBase/connection.js');
 
 module.exports = {
-    //----------------------LISTAR CARGOS-----------------------------------
+    //------------------------LISTAR CARGOS-----------------------------------
     async listarCargos(request, response) {
         try {
             return response.status(200).json(
