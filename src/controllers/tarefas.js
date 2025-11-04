@@ -1,6 +1,8 @@
 const db = require('../dataBase/connection');
 
 module.exports = {
+
+//------------ Listar Tarefas -------------
 async listarTarefas(request, response) {
     try{
         return response.status(200).json(
@@ -21,7 +23,8 @@ async listarTarefas(request, response) {
     }
     },
 
-    async cadastrarTarefas(request, response) {
+    // ------------ Cadastrar Tarefas -------------
+async cadastrarTarefas(request, response) {
     try{
         return response.status(200).json(
             {
@@ -41,6 +44,7 @@ async listarTarefas(request, response) {
     }
     },
 
+    // ------------ Editar Tarefas -------------
     async editarTarefas(request, response) {
     try{
         return response.status(200).json(
@@ -61,6 +65,7 @@ async listarTarefas(request, response) {
     }
     },
 
+    // ------------ Apagar Tarefas -------------
     async apagarTarefas(request, response) {
     try{
         return response.status(200).json(
