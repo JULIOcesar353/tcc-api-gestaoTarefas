@@ -22,7 +22,7 @@ module.exports = {
     },
 
 // ------------ Cadastrar Permissões de Cargo -------------
-    async CadastrarCargoPermissoes (request, response) {
+    async cadastrarCargoPermissoes (request, response) {
       try{ 
         return response.status(200).json(
             {
@@ -42,7 +42,7 @@ module.exports = {
     }
     },
 // ------------ Editar Permissões de Cargo -------------
-    async EditarCargoPermissoes (request, response) {
+    async editarCargoPermissoes (request, response) {
       try{ 
         return response.status(200).json(
             {
@@ -62,7 +62,7 @@ module.exports = {
     }
     },
 // ------------ Excluir Permissões de Cargo -------------
-    async ExcluirCargoPermissoes (request, response) {
+    async apagarCargoPermissoes (request, response) {
       try{ 
         return response.status(200).json(
             {
