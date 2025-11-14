@@ -1,7 +1,7 @@
 const db = require('../dataBase/connection');
 
 module.exports = {
-    async listarpermissoes(request, response) {
+    async listarPermissoes(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true,
@@ -17,7 +17,7 @@ module.exports = {
         }
     },
 
-    async cadastrarUsuarios(request, response) {
+    async cadastrarPermissoes(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true,
@@ -33,7 +33,7 @@ module.exports = {
         }
     },
 
-    async editarUsuarios(request, response) {
+    async editarPermissoes(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true,
@@ -49,7 +49,7 @@ module.exports = {
         }
     },
 
-    async apagarUsuarios(request, response) {
+    async apagarPermissoes(request, response) {
         try {
             return response.status(200).json({
                 sucesso: true,
