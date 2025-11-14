@@ -21,7 +21,7 @@ module.exports = {
             );
         }
     },
-    //---------------------CADASTRAR CARGOS------------------------------
+    //-----------------------CADASTRAR CARGOS---------------------------------
     async cadastrarCargos(request, response) {
         try {
             return response.status(200).json(
@@ -41,7 +41,7 @@ module.exports = {
             );
         }
     },
-    //----------------------EDITAR CARGOS--------------------------------
+    //-------------------------EDITAR CARGOS----------------------------------
     async editarCargos(request, response) {
         try {
             return response.status(200).json(
@@ -61,7 +61,7 @@ module.exports = {
             );
         }
     },
-    //----------------------EXCLUIR CARGOS-------------------------------
+    //-------------------------EXCLUIR CARGOS---------------------------------
     async apagarCargos(request, response) {
         try {
             return response.status(200).json(
@@ -82,3 +82,4 @@ module.exports = {
         }
     },
 }
+
