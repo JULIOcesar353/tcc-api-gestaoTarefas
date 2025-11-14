@@ -1,0 +1,17 @@
+const express = require('express');
+const router = express.Router();
+
+const TarefasController = require('../controllers/tarefas');
+const SetoresController = require('../controllers/setores');
+
+router.get('/tarefas', TarefasController.listarTarefas);
+router.post('/tarefas', TarefasController.cadastrarTarefas);
+router.patch('/tarefas', TarefasController.editarTarefas);
+router.delete('/tarefas', TarefasController.apagarTarefas);
+
+router.get('/setores', SetoresController.listarSetores);
+router.post('/setores', SetoresController.cadastrarSetores);
+router.patch('/setores', SetoresController.editarSetores);
+router.delete('/setores', SetoresController.apagarSetores);
+
+module.exports = router;

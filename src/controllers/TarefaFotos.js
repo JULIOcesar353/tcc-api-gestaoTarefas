@@ -22,7 +22,7 @@ module.exports = {
     },
 
 // ------------ Cadastrar Fotos de Tarefas -------------
-    async CadastrarFotosTarefas (request, response) {
+    async cadastrarFotosTarefas (request, response) {
       try{ 
         return response.status(200).json(
             {
@@ -42,7 +42,7 @@ module.exports = {
     }
     },
 // ------------ Editar Foto das Tarefas -------------
-    async EditarCargoPermissoes (request, response) {
+    async editarCargoPermissoes (request, response) {
       try{ 
         return response.status(200).json(
             {
@@ -62,7 +62,7 @@ module.exports = {
     }
     },
 // ------------ Excluir Foto das T arefas -------------
-    async ExcluirCargoPermissoes (request, response) {
+    async excluirCargoPermissoes (request, response) {
       try{ 
         return response.status(200).json(
             {
