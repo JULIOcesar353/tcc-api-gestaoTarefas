@@ -21,12 +21,12 @@ module.exports = {
 
     }
 },
- async cadastrarlistaratribicaoTarefas (request, response) {
+ async cadastraratribicaoTarefas (request, response) {
         try {
             return response.status(200).json (
                 {
                     sucesso: true,
-                    mensagem: 'cadastro de tarefas feita com sucesso',
+                    mensagem: 'Cadastro de tarefas feita com sucesso',
                     dados: null
                 }
             );
@@ -41,12 +41,12 @@ module.exports = {
 
     }
 },
-    async editarlistaratribicaoTarefas  (request, response) {
+    async editaratribicaoTarefas  (request, response) {
         try {
             return response.status(200).json (
                 {
                     sucesso: true,
-                    mensagem: 'editar atribuição de tarefas feita com sucesso',
+                    mensagem: 'Editar atribuição de tarefas feita com sucesso',
                     dados: null
                 }
             );
@@ -66,7 +66,7 @@ module.exports = {
             return response.status(200).json (
                 {
                     sucesso: true,
-                    mensagem: 'apagar atribuição de tarefas feito com sucesso',
+                    mensagem: 'Apagar atribuição de tarefas feito com sucesso',
                     dados: null
                 }
             );
@@ -76,9 +76,9 @@ module.exports = {
                     sucesso: false,
                     mensagem: `erro ao apagar atribuição de tarefas: ${error.message} `,
                     dados: null
-        }
+                }
              );
 
-    }
-},
+           }
+        },
 }
