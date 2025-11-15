@@ -1,4 +1,4 @@
-const db = requiere('../dataBase/connection.js');
+const db = require('../dataBase/connection.js');
 
 module.exports = {
     //----------------------LISTAR FUNCIONÁRIOS--------------------------------
