@@ -4,10 +4,10 @@ const router = express.Router();
 const atribuicaoTarefasController = require('../controllers/atribuicaoTarefas');
 
 
-router.get('/atribuicaoTarefas' , atribuicaoTarefasController.listaratribicaoTarefas);
-router.post('/atribuicaoTarefas' , atribuicaoTarefasController.cadastraratribicaoTarefas);
-router.patch('/atribuicaoTarefas' , atribuicaoTarefasController.editaratribicaoTarefas);
-router.delete('/atribuicaoTarefas' , atribuicaoTarefasController.apagaratribuicaoTarefas);
+router.get('/atribuicaoTarefas' , atribuicaoTarefasController.listarAtribuicaoTarefas);
+router.post('/atribuicaoTarefas' , atribuicaoTarefasController.cadastrarAtribuicaoTarefas);
+router.patch('/atribuicaoTarefas' , atribuicaoTarefasController.editarAtribuicaoTarefas);
+router.delete('/atribuicaoTarefas' , atribuicaoTarefasController.apagarAtribuicaoTarefas);
 
 
 module.exports = router;

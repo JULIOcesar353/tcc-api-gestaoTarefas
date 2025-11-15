@@ -1,7 +1,7 @@
 const db = require('../dataBase/connection');
 
 module.exports = {
-    async listaratribicaoTarefas(request, response) {
+    async listarAtribuicaoTarefas(request, response) {
         try {
             return response.status(200).json(
                 {
@@ -20,7 +20,7 @@ module.exports = {
             );
         }
     },
-    async cadastrarlistaratribicaoTarefas(request, response) {
+    async cadastrarAtribuicaoTarefas(request, response) {
         try {
             return response.status(200).json(
                 {
@@ -39,7 +39,7 @@ module.exports = {
             );
         }
     },
-    async editarlistaratribicaoTarefas(request, response) {
+    async editarAtribuicaoTarefas(request, response) {
         try {
             return response.status(200).json(
                 {
@@ -58,7 +58,7 @@ module.exports = {
             );
         }
     },
-    async apagaratribuicaoTarefas(request, response) {
+    async apagarAtribuicaoTarefas(request, response) {
         try {
             return response.status(200).json(
                 {
