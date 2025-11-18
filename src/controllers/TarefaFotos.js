@@ -3,11 +3,21 @@ const db = require ('../dataBase/connection')
 module.exports = {
     async listarTarefaFotos (request, response) {
       try{ 
+
+        const sql = `
+        SELECT 
+        fot_id, fot_tarefa_id, fot_nome, fot_descricao, fot_data_envio 
+        FROM TAREFA_FOTOS;
+        `;
+
+        const [tarefafotos] = await db.query(sql);
+
         return response.status(200).json(
             {
             sucesso: true,
             mensagem: 'Foto de Tarefas obtida com sucesso',
-            dados: null
+            itens: tarefafotos.length,
+            dados: tarefafotos
         }
     );
     }  catch (error) {
