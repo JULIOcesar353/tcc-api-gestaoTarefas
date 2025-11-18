@@ -3,11 +3,22 @@ const db = require('../dataBase/connection');
 module.exports = {
     async listarAtribuicaoTarefas(request, response) {
         try {
+
+            const sql = `
+            SELECT 
+                atr_id, atr_tarefa_id, atr_funcionario_id, atr_data_atribuicao 
+            FROM ATRIBUICAO_TAREFAS;
+            `;
+
+            const [atribuicaoTarefas] = await db.query(sql);
+
+            
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Lista de atribuição de tarefas feita com sucesso',
-                    dados: null
+                    itens: atribuicaoTarefas.length,
+                    dados: atribuicaoTarefas
                 }
             );
         } catch (error) {
@@ -15,18 +26,40 @@ module.exports = {
                 {
                     sucesso: false,
                     mensagem: `erro ao listar atribuição de tarefas: ${error.message} `,
-                    dados: null
+                    dados: atribuicaoTarefas
                 }
             );
         }
     },
+
+    /*
     async cadastrarAtribuicaoTarefas(request, response) {
         try {
+
+            const{atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao} = request.body;
+            const usu_ativo = 1;
+
+            const sql = `
+            INSERT INTO ATRIBUICAO_TAREFAS (atr_tarefa_id, atr_funcionario_id, 
+            atr_data_atribuicao)
+            VALUES 
+            (?, ?, ?, )`;
+
+            const values = [atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao];
+
+            const [result] = await db.query(sql, values);
+
+            const dados = {
+                id: result.insertId,
+                atr_tarefa,
+                atr_func,
+                data_atr
+            }
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Cadastro de tarefas feita com sucesso',
-                    dados: null
+                    dados: dados
                 }
             );
         } catch (error) {
@@ -39,6 +72,8 @@ module.exports = {
             );
         }
     },
+    */
+    
     async editarAtribuicaoTarefas(request, response) {
         try {
             return response.status(200).json(

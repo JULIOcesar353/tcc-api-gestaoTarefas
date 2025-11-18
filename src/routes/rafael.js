@@ -10,4 +10,4 @@ router.patch('/atribuicaoTarefas' , atribuicaoTarefasController.editarAtribuicao
 router.delete('/atribuicaoTarefas' , atribuicaoTarefasController.apagarAtribuicaoTarefas);
 
 
-module.exports = router;
+module.exports = router;   
