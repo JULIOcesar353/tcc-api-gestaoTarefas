@@ -5,14 +5,18 @@ module.exports = {
 //------------ Listar Tarefas -------------
 async listarTarefas(request, response) {
     try{
+        const sql = `SELECT 
+            tar_id, tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_status = 1 AS tar_status, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto = 1 AS tar_exige_foto
+        FROM TAREFAS;`;
 
-        
+        const [tarefas] = await db.query(sql);
 
         return response.status(200).json(
             {
                 sucesso: true,
                 mensagem: 'Lista de tarefas obtida com sucesso',
-                dados: null
+                items: tarefas.length,
+                dados: tarefas
             }
         );
     } catch (error) {

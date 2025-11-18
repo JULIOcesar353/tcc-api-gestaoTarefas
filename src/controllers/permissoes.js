@@ -3,10 +3,18 @@ const db = require('../dataBase/connection');
 module.exports = {
     async listarPermissoes(request, response) {
         try {
+
+            const sql = `
+            SELECT prm_id, prm_nome FROM PERMISSOES;
+            `;
+            
+            const [permissoes] = await db.query(sql);
+
             return response.status(200).json({
                 sucesso: true,
                 menssagem: 'Lista de Permissões de usuários obtida com sucesso',
-                dados: null
+                itens: permissoes.length,
+                dados: permissoes
             });
         } catch (error) {
             return response.status(500).json({
@@ -16,12 +24,33 @@ module.exports = {
             });
         }
     },
-
+/*
     async cadastrarPermissoes(request, response) {
         try {
+
+            const { nome, id } = request.body;
+
+            // introdição SQL
+            const sql = `INSERT INTO PERMISSOES (prm_nome) 
+            VALUES
+            (?,);`;
+
+            //definição dos dados a serem inseridos em array
+            const values = [nome, id];
+
+            //execução da instrução sql passandoo os parâmetros
+            const [result] = await db.query(sql, values);
+
+            //identificar o ID do novo registro
+            const dados = {
+                id: result.insertId,
+                nome,
+                id
+            };
+
             return response.status(200).json({
                 sucesso: true,
-                menssagem: 'permissoes de usuários realizado com sucesso',
+                menssagem: 'Permissoes de usuários realizado com sucesso',
                 dados: null
             });
         } catch (error) {
@@ -32,7 +61,7 @@ module.exports = {
             });
         }
     },
-
+*/
     async editarPermissoes(request, response) {
         try {
             return response.status(200).json({
