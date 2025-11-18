@@ -4,11 +4,18 @@ module.exports = {
     //------------------------LISTAR CARGOS-----------------------------------
     async listarCargos(request, response) {
         try {
+            const sql = `SELECT 
+                crg_id, crg_nome 
+            FROM CARGOS;`;
+
+            const [cargos] = await db.query(sql);
+
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Listagem de Cargos realizada',
-                    dados: null
+                    items: cargos.length,
+                    dados: cargos
                 }
             );
         } catch (error) {
