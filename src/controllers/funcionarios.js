@@ -4,11 +4,18 @@ module.exports = {
     //----------------------LISTAR FUNCIONÁRIOS--------------------------------
     async listarFuncionarios(request, response) {
         try {
+            const sql = `SELECT 
+                func_id, func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo = 1 AS func_ativo, func_data_criacao 
+            FROM FUNCIONARIOS;`;
+
+            const [funcionarios] = await db.query(sql);
+
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Lista de Funcionários obtida com sucesso',
-                    dados: null
+                    items: funcionarios.length,
+                    dados: funcionarios
                 }
             );
         } catch (error) {
@@ -24,19 +31,43 @@ module.exports = {
     //---------------------CADASTRAR FUNCIONÁRIOS------------------------------
     async cadastrarFuncionarios(request, response) {
         try {
+            const {setor, cargo, nome, email, senha, dataCriacao} = request.body;
+            const func_ativo = 1;
+
+            const sql = `
+            INSERT INTO FUNCIONARIOS 
+                (func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao)
+            VALUES
+                (?, ?, ?, ?, ?, ?, ?);
+            `;
+
+            const values = [setor, cargo, nome, email, senha, func_ativo, dataCriacao];
+
+            const [result] = await db.query(sql, values);
+
+            const dados = {
+                setor: 1,
+                cargo: 1,
+                nome,
+                email,
+                senha,
+                func_ativo,
+                dataCriacao
+            };
+
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Cadastro de funcionários realizada!',
-                    dados: null
+                    dados: dados
                 }
             );
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `Erro ao cadastrar Funcionários ${error.mensage}`,
-                    dados: null
+                    mensagem: `Erro ao cadastrar Funcionários.`,
+                    dados: error.message
                 }
             );
         }

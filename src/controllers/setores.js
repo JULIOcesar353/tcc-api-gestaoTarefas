@@ -4,11 +4,18 @@ module.exports = {
 //------------ Listar Setores -------------
 async listarSetores(request, response) {
     try{
+        const sql = `SELECT 
+            set_id, set_nome 
+        FROM SETORES;`;
+
+        const [setores] = await db.query(sql);
+
         return response.status(200).json(
             {
                 sucesso: true,
                 mensagem: 'Lista de setores obtida com sucesso',
-                dados: null
+                items: setores.length,
+                dados: setores
             }
         );
     } catch (error) {
