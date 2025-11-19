@@ -31,28 +31,23 @@ module.exports = {
     //---------------------CADASTRAR FUNCIONÁRIOS------------------------------
     async cadastrarFuncionarios(request, response) {
         try {
+            const { setor, cargo, nome, email, senha, ativo, data} = request.body;
+
             const sql = `INSERT INTO FUNCIONARIOS 
             (func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao) 
             VALUES 
-            (?, ?, ?, ?, ?, 1, NOW());`;
+            (?, ?, ?, ?, ?, ?, NOW());`;
 
-            const { setor, cargo, nome, email, senha } = request.body;
-
-            const values = [setor, cargo, nome, email, senha];
+            const values = [setor, cargo, nome, email, senha, ativo, data];
             const [result] = await db.query(sql, values);
 
             const dados = {  
                 id: result.insertId,
-                setor,
-                cargo,   
                 nome,
                 email,
-                senha,
-                ativo: 1,
+                ativo,
                 data_criacao: new Date()
             };
-
-
 
             return response.status(200).json(
                 {
