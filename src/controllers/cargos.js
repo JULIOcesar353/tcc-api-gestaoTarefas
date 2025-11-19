@@ -31,19 +31,34 @@ module.exports = {
     //-----------------------CADASTRAR CARGOS---------------------------------
     async cadastrarCargos(request, response) {
         try {
+            const {cargo} = request.body;
+
+            const sql = `INSERT INTO CARGOS 
+                (crg_nome) 
+            VALUES 
+                (?);`;
+
+            const values = [cargo];
+            const [result] = await db.query(sql, values);
+            
+            const dados = {
+                id: result.insertId,
+                cargo
+            };
+
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Cadastro de cargos realizada!',
-                    dados: null
+                    dados: dados
                 }
             );
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `Erro ao cadastrar Cargos ${error.mensage}`,
-                    dados: null
+                    mensagem: `Erro ao cadastrar Cargos.`,
+                    dados: error.message
                 }
             );
         }

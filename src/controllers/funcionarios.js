@@ -34,9 +34,9 @@ module.exports = {
             const { setor, cargo, nome, email, senha, ativo, data} = request.body;
 
             const sql = `INSERT INTO FUNCIONARIOS 
-            (func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao) 
+                (func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao) 
             VALUES 
-            (?, ?, ?, ?, ?, ?, NOW());`;
+                (?, ?, ?, ?, ?, ?, NOW());`;
 
             const values = [setor, cargo, nome, email, senha, ativo, data];
             const [result] = await db.query(sql, values);

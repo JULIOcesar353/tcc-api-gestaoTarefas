@@ -157,7 +157,7 @@ VALUES
 -- 5. CARGO_PERMISSOES
 -- =========================
 -- Gerente: todas as permissões
-INSERT INTO CARGO_PERMISSOES VALUES
+INSERT INTO CARGO_PERMISSOES (crg_id, prm_id, crg_prm_cadastrar, crg_perm_editar, crg_prm_consultar) VALUES
 (1, 1, 1, 1, 1),
 (1, 2, 1, 1, 1),
 (1, 3, 1, 1, 1),

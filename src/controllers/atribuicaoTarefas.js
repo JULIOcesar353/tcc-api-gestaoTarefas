@@ -30,50 +30,41 @@ module.exports = {
                 }
             );
         }
-    },
-
-    
+    },    
     async cadastrarAtribuicaoTarefas(request, response) {
         try {
+            const {tarefaId, funcId} = request.body;
 
-            // const{atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao} = request.body;
-            // const usu_ativo = 1;
+            const sql = `INSERT INTO ATRIBUICAO_TAREFAS 
+                (atr_tarefa_id, atr_funcionario_id, atr_data_atribuicao)
+            VALUES
+                (?, ?, NOW());`;
 
-            // const sql = `
-            // INSERT INTO ATRIBUICAO_TAREFAS (atr_tarefa_id, atr_funcionario_id, 
-            // atr_data_atribuicao)
-            // VALUES 
-            // (?, ?, ?, )`;
+            const values = [tarefaId, funcId];
+            
+            const [result] = await db.query(sql, values);
 
-            // const values = [atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao];
+            const dados = {
+                id: result.insertId
+            };
 
-            // const [result] = await db.query(sql, values);
-
-            // const dados = {
-            //     id: result.insertId,
-            //     atr_tarefa,
-            //     atr_func,
-            //     data_atr
-            // }
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Cadastro de tarefas feita com sucesso',
-                    dados: null
+                    dados: dados
                 }
             );
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `erro ao cadastrar tarefas : ${error.message} `,
-                    dados: null
+                    mensagem: `erro ao cadastrar tarefas.`,
+                    dados: error.message
                 }
             );
         }
     },
-    
-    
     async editarAtribuicaoTarefas(request, response) {
         try {
             return response.status(200).json(

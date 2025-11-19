@@ -33,16 +33,16 @@ module.exports = {
     // ------------ Cadastrar Tarefas -------------
     async cadastrarTarefas(request, response) {
         try {
-            const {setor, criado, titulo, descricao, prioridade, prazo, status, estimativa, data, foto} = request.body;
+            const {setor, criado, titulo, descricao, prioridade, status, estimativa, foto} = request.body;
             
             const sql = `INSERT INTO TAREFAS 
-                (tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_status, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto)
+                    (tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_status, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto)
                 VALUES
-                (?,?,?,?,?, DATE_ADD(NOW(), INTERVAL 1 DAY),?,?,NOW(), 0);`;
+                    (?,?,?,?,?, DATE_ADD(NOW(), INTERVAL 1 DAY),?,?,NOW(), 0);`;
             
-                const values = [setor, criado, titulo, descricao, prioridade , status, estimativa];
+            const values = [setor, criado, titulo, descricao, prioridade , status, estimativa, foto];
 
-                const [result] = await db.query(sql, values);
+            const [result] = await db.query(sql, values);
 
             const dados ={
                 id: result.insertId,

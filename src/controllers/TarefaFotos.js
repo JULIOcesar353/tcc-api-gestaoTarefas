@@ -34,19 +34,35 @@ module.exports = {
 // ------------ Cadastrar Fotos de Tarefas -------------
     async cadastrarFotosTarefas (request, response) {
       try{ 
+        const {tarefa, nome, descricao} = request.body;
+
+        const sql = `INSERT INTO TAREFA_FOTOS 
+            (fot_tarefa_id, fot_nome, fot_descricao, fot_data_envio)
+        VALUES
+            (?, ?, ?, NOW());`;
+
+        const values = [tarefa, nome, descricao];
+
+        const [result] = await db.query(sql, values);
+
+        const dados = {
+            id: result.insertId,
+            nome, 
+            descricao
+        };
         return response.status(200).json(
             {
             sucesso: true,
             mensagem: 'Cadastro de Foto das Tarefas efetuada com sucesso',
-            dados: null
+            dados: dados
         }
     );
     }  catch (error) {
         return response.status(500).json(
             {
                 sucesso: false,
-                mensagem: `Erro ao Cadastrar Foto das Tarefas: ${error.message}`,
-                dados: null
+                mensagem: `Erro ao Cadastrar Foto das Tarefas.`,
+                dados: error.message
             }
         );
     }
