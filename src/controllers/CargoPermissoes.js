@@ -32,13 +32,17 @@ module.exports = {
     },
 
 // ------------ Cadastrar Permissões de Cargo -------------
-/*
+
     async cadastrarCargoPermissoes (request, response) {
       try{ 
 
 
-        const { nome, id, crg_prm_editar, crg_prm_consultar, crg_prm_cadastrar } = request.body;
-        const crg_prm_editar, crg_prm_consultar, crg_prm_cadastrar = 1;
+        // const { nome, id, crg_prm_editar, crg_prm_consultar, crg_prm_cadastrar } = request.body;
+        // const crg_prm_editar = 1;
+        // const crg_prm_consultar = 1;
+        // const crg_prm_cadastrar = 1;
+
+
         return response.status(200).json(
             {
             sucesso: true,
@@ -76,7 +80,7 @@ module.exports = {
         );
     }
     },
-*/
+
 // ------------ Excluir Permissões de Cargo -------------
     async apagarCargoPermissoes (request, response) {
       try{ 

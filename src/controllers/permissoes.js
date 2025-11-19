@@ -24,29 +24,29 @@ module.exports = {
             });
         }
     },
-/*
+
     async cadastrarPermissoes(request, response) {
         try {
 
-            const { nome, id } = request.body;
+            // const { nome, id } = request.body;
 
-            // introdição SQL
-            const sql = `INSERT INTO PERMISSOES (prm_nome) 
-            VALUES
-            (?,);`;
+            // // introdição SQL
+            // const sql = `INSERT INTO PERMISSOES (prm_nome) 
+            // VALUES
+            // (?,);`;
 
-            //definição dos dados a serem inseridos em array
-            const values = [nome, id];
+            // //definição dos dados a serem inseridos em array
+            // const values = [nome, id];
 
-            //execução da instrução sql passandoo os parâmetros
-            const [result] = await db.query(sql, values);
+            // //execução da instrução sql passandoo os parâmetros
+            // const [result] = await db.query(sql, values);
 
-            //identificar o ID do novo registro
-            const dados = {
-                id: result.insertId,
-                nome,
-                id
-            };
+            // //identificar o ID do novo registro
+            // const dados = {
+            //     id: result.insertId,
+            //     nome,
+            //     id
+            // };
 
             return response.status(200).json({
                 sucesso: true,
@@ -61,7 +61,7 @@ module.exports = {
             });
         }
     },
-*/
+
     async editarPermissoes(request, response) {
         try {
             return response.status(200).json({

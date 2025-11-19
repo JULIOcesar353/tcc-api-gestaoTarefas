@@ -32,34 +32,34 @@ module.exports = {
         }
     },
 
-    /*
+    
     async cadastrarAtribuicaoTarefas(request, response) {
         try {
 
-            const{atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao} = request.body;
-            const usu_ativo = 1;
+            // const{atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao} = request.body;
+            // const usu_ativo = 1;
 
-            const sql = `
-            INSERT INTO ATRIBUICAO_TAREFAS (atr_tarefa_id, atr_funcionario_id, 
-            atr_data_atribuicao)
-            VALUES 
-            (?, ?, ?, )`;
+            // const sql = `
+            // INSERT INTO ATRIBUICAO_TAREFAS (atr_tarefa_id, atr_funcionario_id, 
+            // atr_data_atribuicao)
+            // VALUES 
+            // (?, ?, ?, )`;
 
-            const values = [atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao];
+            // const values = [atribuicao_tarefas, atribuicao_funcionarios, data_atribuicao];
 
-            const [result] = await db.query(sql, values);
+            // const [result] = await db.query(sql, values);
 
-            const dados = {
-                id: result.insertId,
-                atr_tarefa,
-                atr_func,
-                data_atr
-            }
+            // const dados = {
+            //     id: result.insertId,
+            //     atr_tarefa,
+            //     atr_func,
+            //     data_atr
+            // }
             return response.status(200).json(
                 {
                     sucesso: true,
                     mensagem: 'Cadastro de tarefas feita com sucesso',
-                    dados: dados
+                    dados: null
                 }
             );
         } catch (error) {
@@ -72,7 +72,7 @@ module.exports = {
             );
         }
     },
-    */
+    
     
     async editarAtribuicaoTarefas(request, response) {
         try {
