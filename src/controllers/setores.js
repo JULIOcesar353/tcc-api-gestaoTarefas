@@ -4,10 +4,12 @@ module.exports = {
 //------------ Listar Setores -------------
 async listarSetores(request, response) {
     try{
+        //instruções SQL
         const sql = `SELECT 
             set_id, set_nome 
         FROM SETORES;`;
 
+        //executa instruções SQL e armazena o resultado na variavel setores
         const [setores] = await db.query(sql);
 
         return response.status(200).json(
