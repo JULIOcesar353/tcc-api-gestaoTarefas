@@ -6,7 +6,7 @@ const SetoresController = require('../controllers/setores');
 
 router.get('/tarefas', TarefasController.listarTarefas);
 router.post('/tarefas', TarefasController.cadastrarTarefas);
-router.patch('/tarefas', TarefasController.editarTarefas);
+router.patch('/tarefas/:id', TarefasController.editarTarefas);
 router.delete('/tarefas', TarefasController.apagarTarefas);
 
 router.get('/setores', SetoresController.listarSetores);

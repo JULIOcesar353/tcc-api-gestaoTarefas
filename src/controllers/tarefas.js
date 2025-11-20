@@ -74,19 +74,56 @@ module.exports = {
     // ------------ Editar Tarefas -------------
     async editarTarefas(request, response) {
         try {
+            const {setor, criado, titulo, descricao, prioridade, prazo, status, estimativa, data, foto} = request.body;
+
+            const {id} = request.params;
+
+            const sql = `
+                UPDATE TAREFAS SET
+                    tar_setor_id = ?, tar_criado_por = ?, tar_titulo = ?, 
+                    tar_descricao = ?, tar_prioridade = ?, tar_prazo = ?, tar_status = ?, 
+                    tar_estimativa_minutos = ?, tar_data_criacao = ?, tar_exige_foto = ?
+                WHERE
+                    tar_id = ?;
+            `;
+
+            const values = [setor, criado, titulo, descricao, prioridade, prazo, status, estimativa, data, foto, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Tarefa ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,
+                titulo,
+                descricao,
+                prioridade,
+                prazo,
+                status,
+                estimativa,
+                data,
+                foto
+            }
+
             return response.status(200).json(
                 {
                     sucesso: true,
-                    mensagem: 'Atualização de tarefas realizada com sucesso',
-                    dados: null
+                    mensagem: `Tarefa ${id} atualizada com sucesso`,
+                    dados
                 }
             );
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `Erro ao editar tarefas: ${error.message} `,
-                    dados: null
+                    mensagem: `Erro ao editar tarefas.`,
+                    dados: error.message
                 }
             );
         }

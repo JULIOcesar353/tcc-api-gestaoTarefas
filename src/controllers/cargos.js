@@ -66,19 +66,47 @@ module.exports = {
     //-------------------------EDITAR CARGOS----------------------------------
     async editarCargos(request, response) {
         try {
+            const {cargo} = request.body;
+
+            const { id } = request.params;
+
+            const sql = `
+                UPDATE CARGOS SET
+                    crg_nome = ?
+                WHERE 
+                    crg_id = ?
+            `;
+
+            const values = [cargo, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Cargo ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,
+                cargo
+            };
+
             return response.status(200).json(
                 {
                     sucesso: true,
-                    mensagem: 'Atualização de cargos realizada!',
-                    dados: null
+                    mensagem: `Cargo ${id} atualizado!`,
+                    dados
                 }
             );
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `Erro ao atualizar Cargos ${error.mensage}`,
-                    dados: null
+                    mensagem: `Erro ao atualizar Cargos.`,
+                    dados: error.message
                 }
             );
         }

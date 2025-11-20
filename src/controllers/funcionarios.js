@@ -69,19 +69,49 @@ module.exports = {
     //-----------------------EDITAR FUNCIONÁRIOS-------------------------------
     async editarFuncionarios(request, response) {
         try {
+            const {setor, cargo, nome, email, senha, ativo, data} = request.body;
+
+            const { id } = request.params;
+
+            const sql = `
+                UPDATE FUNCIONARIOS SET
+                    func_setor_id = ?, func_crg_id = ?, func_nome = ?, func_email = ?, func_senha = ?, func_ativo =?, func_data_criacao = ?
+                WHERE
+                    func_id = ?;
+            `;
+
+            const values = [setor, cargo, nome, email, senha, ativo, data, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Usuário ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,
+                nome,
+                email,
+                ativo
+            };
+
             return response.status(200).json(
                 {
                     sucesso: true,
-                    mensagem: 'Atualização de funcionários realizada!',
-                    dados: null
-                }
-            );
+                    mensagem: `Funcionário ${id} atualizado com sucesso!`,
+                    dados
+                });
+
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `Erro ao atualizar Funcionários ${error.mensage}`,
-                    dados: null
+                    mensagem: `Erro ao atualizar Funcionários.`,
+                    dados: error.message
                 }
             );
         }
