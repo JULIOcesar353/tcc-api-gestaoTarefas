@@ -70,11 +70,40 @@ module.exports = {
     // ------------ Editar Setores -------------
     async editarSetores(request, response) {
         try {
+
+            const {setor} = request.body;
+
+            const { id } = request.params;
+
+            const sql = `
+                UPDATE setores SET
+                    set_nome = ?
+                WHERE 
+                    set_id = ?
+            `;
+
+            const values = [setor, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Setor ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,
+                setor
+            };
+
             return response.status(200).json(
                 {
                     sucesso: true,
-                    mensagem: 'Atualização de setores realizado com sucesso',
-                    dados: null
+                    mensagem: `Setor ${id} atualizado com sucesso.`,
+                    dados
                 }
             );
         } catch (error) {

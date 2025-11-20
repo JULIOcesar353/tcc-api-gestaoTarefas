@@ -6,7 +6,7 @@ const atribuicaoTarefasController = require('../controllers/atribuicaoTarefas');
 
 router.get('/atribuicaoTarefas' , atribuicaoTarefasController.listarAtribuicaoTarefas);
 router.post('/atribuicaoTarefas' , atribuicaoTarefasController.cadastrarAtribuicaoTarefas);
-router.patch('/atribuicaoTarefas' , atribuicaoTarefasController.editarAtribuicaoTarefas);
+router.patch('/atribuicaoTarefas/:id' , atribuicaoTarefasController.editarAtribuicaoTarefas);
 router.delete('/atribuicaoTarefas' , atribuicaoTarefasController.apagarAtribuicaoTarefas);
 
 

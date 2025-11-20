@@ -11,7 +11,7 @@ router.delete('/tarefas', TarefasController.apagarTarefas);
 
 router.get('/setores', SetoresController.listarSetores);
 router.post('/setores', SetoresController.cadastrarSetores);
-router.patch('/setores', SetoresController.editarSetores);
+router.patch('/setores/:id', SetoresController.editarSetores);
 router.delete('/setores', SetoresController.apagarSetores);
 
 module.exports = router;

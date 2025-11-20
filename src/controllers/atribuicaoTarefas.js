@@ -26,7 +26,7 @@ module.exports = {
                 {
                     sucesso: false,
                     mensagem: `erro ao listar atribuição de tarefas: ${error.message} `,
-                    dados: atribuicaoTarefas
+                    dados: null
                 }
             );
         }
@@ -67,6 +67,35 @@ module.exports = {
     },
     async editarAtribuicaoTarefas(request, response) {
         try {
+            
+            const { data_atribuicao} = request.body;
+
+            const { id } = request.params;
+
+            const sql = `
+                UPDATE atribuicao_tarefas SET                    
+                    atr_data_atribuicao = ?
+                WHERE 
+                    atr_id = ?
+            `;
+
+            const values = [ data_atribuicao, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Atribuição de tarefas ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,                
+                data_atribuicao
+            };
+
             return response.status(200).json(
                 {
                     sucesso: true,

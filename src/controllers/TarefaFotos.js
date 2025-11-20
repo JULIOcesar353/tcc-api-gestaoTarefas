@@ -70,6 +70,40 @@ module.exports = {
 // ------------ Editar Foto das Tarefas -------------
     async editarCargoPermissoes (request, response) {
       try{ 
+
+         const {nome, descricao, data_envio} = request.body;
+
+            const { id } = request.params;
+
+            const sql = `
+                UPDATE tarefa_Fotos SET
+                    fot_nome = ?,
+                    fot_descricao = ?,
+                    fot_data_envio = ?
+                WHERE 
+                    fot_id = ?
+            `;
+
+            const values = [ nome, descricao, data_envio, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Foto da tarefa ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,
+                nome,
+                descricao,
+                data_envio
+            };
+
+
         return response.status(200).json(
             {
             sucesso: true,

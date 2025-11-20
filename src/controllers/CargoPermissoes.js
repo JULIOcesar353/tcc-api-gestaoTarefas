@@ -35,7 +35,7 @@ module.exports = {
 
     async cadastrarCargoPermissoes(request, response) {
         try {
-            const {cargo, permissao, cadastrar, editar, consultar} = request.body;
+            const { cargo, permissao, cadastrar, editar, consultar } = request.body;
 
             const sql = `INSERT INTO CARGO_PERMISSOES 
                 (crg_id, prm_id, crg_prm_cadastrar, crg_perm_editar, crg_prm_consultar) 
@@ -73,6 +73,40 @@ module.exports = {
     // ------------ Editar Permissões de Cargo -------------
     async editarCargoPermissoes(request, response) {
         try {
+
+            const { cadastrar, editar, consultar } = request.body;
+            const { crg_id, prm_id } = request.params;
+
+            const sql = `
+                UPDATE CARGO_PERMISSOES SET
+                    crg_prm_cadastrar = ?,
+                    crg_perm_editar = ?,
+                    crg_prm_consultar = ?
+                WHERE
+                    crg_id = ?
+                    AND prm_id = ?
+                `;
+
+            const values = [cadastrar, editar, consultar, crg_id, prm_id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Cargo permissão crg_id${id} e prm_id${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                crg_id,
+                prm_id,
+                cadastrar,
+                editar,
+                consultar
+            }
+
             return response.status(200).json(
                 {
                     sucesso: true,

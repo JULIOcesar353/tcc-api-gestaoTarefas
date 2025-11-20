@@ -59,6 +59,36 @@ module.exports = {
 
     async editarPermissoes(request, response) {
         try {
+            
+            const {permissao} = request.body;
+
+            const { id } = request.params;
+
+            const sql = `
+                UPDATE permissoes SET
+                    prm_nome = ?
+                WHERE 
+                    prm_id = ?
+            `;
+
+            const values = [permissao, id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Permissao ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                id,
+                permissao
+            };
+
+
             return response.status(200).json({
                 sucesso: true,
                 menssagem: 'Atualização de permissoes realizada com sucesso',

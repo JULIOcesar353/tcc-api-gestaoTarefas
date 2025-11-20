@@ -5,7 +5,7 @@ const UsuariosController = require('../controllers/permissoes');
 
 router.get('/permissoes', UsuariosController.listarPermissoes);
 router.post('/permissoes', UsuariosController.cadastrarPermissoes);
-router.patch('/permissoes', UsuariosController.editarPermissoes);
+router.patch('/permissoes/:id', UsuariosController.editarPermissoes);
 router.delete('/permissoes', UsuariosController.apagarPermissoes);
 
 module.exports = router;
