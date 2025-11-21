@@ -6,7 +6,7 @@ module.exports = {
     async listarTarefas(request, response) {
         try {
             const sql = `SELECT 
-            tar_id, tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_status = 1 AS tar_status, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto = 1 AS tar_exige_foto
+            tar_id, tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto = 1 AS tar_exige_foto
         FROM TAREFAS;`;
 
             const [tarefas] = await db.query(sql);
@@ -33,14 +33,14 @@ module.exports = {
     // ------------ Cadastrar Tarefas -------------
     async cadastrarTarefas(request, response) {
         try {
-            const {setor, criado, titulo, descricao, prioridade, status, estimativa, foto} = request.body;
+            const {setor, criado, titulo, descricao, prioridade, estimativa, foto} = request.body;
             
             const sql = `INSERT INTO TAREFAS 
-                    (tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_status, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto)
+                    (tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto)
                 VALUES
-                    (?,?,?,?,?, DATE_ADD(NOW(), INTERVAL 1 DAY),?,?,NOW(), 0);`;
+                    (?,?,?,?,?, DATE_ADD(NOW(), INTERVAL 1 DAY),?,NOW(), 0);`;
             
-            const values = [setor, criado, titulo, descricao, prioridade , status, estimativa, foto];
+            const values = [setor, criado, titulo, descricao, prioridade , estimativa, foto];
 
             const [result] = await db.query(sql, values);
 
@@ -49,7 +49,6 @@ module.exports = {
                 titulo,
                 descricao,
                 prioridade,
-                status,
                 estimativa
             };
 
@@ -74,20 +73,20 @@ module.exports = {
     // ------------ Editar Tarefas -------------
     async editarTarefas(request, response) {
         try {
-            const {setor, criado, titulo, descricao, prioridade, prazo, status, estimativa, data, foto} = request.body;
+            const {setor, criado, titulo, descricao, prioridade, prazo, estimativa, data, foto} = request.body;
 
             const {id} = request.params;
 
             const sql = `
                 UPDATE TAREFAS SET
                     tar_setor_id = ?, tar_criado_por = ?, tar_titulo = ?, 
-                    tar_descricao = ?, tar_prioridade = ?, tar_prazo = ?, tar_status = ?, 
+                    tar_descricao = ?, tar_prioridade = ?, tar_prazo = ?, 
                     tar_estimativa_minutos = ?, tar_data_criacao = ?, tar_exige_foto = ?
                 WHERE
                     tar_id = ?;
             `;
 
-            const values = [setor, criado, titulo, descricao, prioridade, prazo, status, estimativa, data, foto, id];
+            const values = [setor, criado, titulo, descricao, prioridade, prazo,  estimativa, data, foto, id];
 
             const [result] = await db.query(sql, values);
 
@@ -105,7 +104,6 @@ module.exports = {
                 descricao,
                 prioridade,
                 prazo,
-                status,
                 estimativa,
                 data,
                 foto

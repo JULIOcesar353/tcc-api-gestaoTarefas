@@ -6,7 +6,7 @@ module.exports = {
 
             const sql = `
             SELECT 
-                atr_id, atr_tarefa_id, atr_funcionario_id, atr_data_atribuicao 
+                atr_id, atr_tarefa_id, atr_funcionario_id, atr_status, atr_data_atribuicao 
             FROM ATRIBUICAO_TAREFAS;
             `;
 
@@ -33,14 +33,14 @@ module.exports = {
     },    
     async cadastrarAtribuicaoTarefas(request, response) {
         try {
-            const {tarefaId, funcId} = request.body;
+            const {status, tarefaId, funcId} = request.body;
 
             const sql = `INSERT INTO ATRIBUICAO_TAREFAS 
-                (atr_tarefa_id, atr_funcionario_id, atr_data_atribuicao)
+                (atr_tarefa_id, atr_funcionario_id, atr_status, atr_data_atribuicao)
             VALUES
-                (?, ?, NOW());`;
+                (?, ?, ?, NOW());`;
 
-            const values = [tarefaId, funcId];
+            const values = [tarefaId, funcId, status];
             
             const [result] = await db.query(sql, values);
 
@@ -68,18 +68,19 @@ module.exports = {
     async editarAtribuicaoTarefas(request, response) {
         try {
             
-            const { data_atribuicao} = request.body;
+            const {status, data_atribuicao} = request.body;
 
             const { id } = request.params;
 
             const sql = `
-                UPDATE atribuicao_tarefas SET                    
+                UPDATE atribuicao_tarefas SET 
+                    atr_status = ?,    
                     atr_data_atribuicao = ?
                 WHERE 
                     atr_id = ?
             `;
 
-            const values = [ data_atribuicao, id];
+            const values = [status, data_atribuicao, id];
 
             const [result] = await db.query(sql, values);
 
@@ -93,7 +94,9 @@ module.exports = {
 
             const dados = {
                 id,                
+                status,
                 data_atribuicao
+                
             };
 
             return response.status(200).json(
