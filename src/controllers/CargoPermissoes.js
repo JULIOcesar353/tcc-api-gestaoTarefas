@@ -128,22 +128,37 @@ module.exports = {
     // ------------ Excluir Permissões de Cargo -------------
     async apagarCargoPermissoes(request, response) {
         try {
-            return response.status(200).json(
-                {
-                    sucesso: true,
-                    mensagem: 'Exclusão de Permissões de Cargos efetuada com sucesso',
-                    dados: null
-                }
-            );
-        } catch (error) {
-            return response.status(500).json(
-                {
+            const { crg_id, prm_id } = request.params;
+
+            const sql = `
+                DELETE FROM cargo_permissoes
+                WHERE crg_id = ? AND prm_id = ?
+                `;
+
+            const [result] = await db.query(sql, [crg_id, prm_id]);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
                     sucesso: false,
-                    mensagem: `Erro ao Excluir Permissoes de C argos: ${error.message}`,
-                    dados: null
-                }
-            );
-        }
-    },
-}
+                    mensagem: `Permissão não encontrada para esse cargo`
+                });
+            }
+                return response.status(200).json(
+                    {
+                        sucesso: true,
+                        mensagem: 'Exclusão de Permissões de Cargos efetuada com sucesso',
+                        dados: null
+                    }
+                );
+            } catch (error) {
+                return response.status(500).json(
+                    {
+                        sucesso: false,
+                        mensagem: `Erro ao Excluir Permissoes de C argos: ${error.message}`,
+                        dados: null
+                    }
+                );
+            }
+        },
+    }
 

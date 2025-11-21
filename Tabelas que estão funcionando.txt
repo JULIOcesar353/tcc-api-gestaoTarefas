@@ -1,0 +1,63 @@
+========================== DIVISÃO DE TABELAS ==========================
+Júlio: CARGOS, FUNCIONARIOS
+
+Rafael: ATRIBUICAO_TAREFAS
+
+Ryan: CARGO_PERMISSOES, TAREFA_FOTOS
+
+Paulo: TAREFAS, SETORES
+
+Maxsuel: PERMISSOES
+
+Funcionarios
+listar - OK
+editar - OK
+cadastrar - OK
+apagar - OK ---- OCULTAR
+
+
+------DELETE NÃO FUNCIONA SE TIVER ALGUM FUNCIONARIO NO CARGO
+Cargos
+listar - OK 
+editar - OK
+cadastrar - OK
+apagar - OK
+
+Tarefas
+listar - OK
+editar - OK
+cadastrar - OK
+apagar -
+
+Setores
+listar - OK 
+editar - OK
+cadastrar - OK
+apagar - 
+
+Tarefa_Fotos
+listar - OK
+editar - OK
+cadastrar - OK
+apagar - OK
+
+-------------------SE DIGITAR CRG_ID OU PRM_ID = 0 DA ERRO NO INSOMNIA TEMOS QUE COLOCAR CARGOS PERMISSOES DE 1 PRA CIMA
+---- PARA FUNCIONAR PRECISA DOS 2 ID
+Cargo_Permissoes
+listar - OK
+editar - OK
+cadastrar - OK
+apagar - OK
+
+Permissoes
+listar - OK
+editar - OK
+cadastrar - OK
+apagar -
+
+Não temos atr_status no banco
+Atribuicao_Tarefas
+listar - OK
+editar - OK
+cadastrar - OK
+apagar - OK

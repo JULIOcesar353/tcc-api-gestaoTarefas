@@ -114,6 +114,25 @@ module.exports = {
     //-------------------------EXCLUIR CARGOS---------------------------------
     async apagarCargos(request, response) {
         try {
+            
+            const { id } = request.params;
+
+            const sql = `
+                DELETE FROM cargos
+                WHERE crg_id = ?
+            `;
+
+            const values = [id];
+            const [result] = await db.query(sql, [values]);
+        
+            if (result.affectedRows === 0) {
+            return response.status(400).json({
+                sucesso: false,
+                mensagem: `Cargo não encontrado ou está sendo usado.`,
+                dados: error.message
+            });
+        }
+            
             return response.status(200).json(
                 {
                     sucesso: true,

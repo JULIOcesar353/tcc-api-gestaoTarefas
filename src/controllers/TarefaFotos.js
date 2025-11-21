@@ -68,7 +68,7 @@ module.exports = {
     }
     },
 // ------------ Editar Foto das Tarefas -------------
-    async editarCargoPermissoes (request, response) {
+    async editartarefaFotos (request, response) {
       try{ 
 
          const {nome, descricao, data_envio} = request.body;
@@ -122,8 +122,25 @@ module.exports = {
     }
     },
 // ------------ Excluir Foto das T arefas -------------
-    async excluirCargoPermissoes (request, response) {
+    async excluirtarefaFotos (request, response) {
       try{ 
+        const { id } = request.params;
+
+            const sql = `
+                DELETE FROM tarefa_fotos
+                WHERE fot_id = ?
+            `;
+
+            const values = [id];
+            const [result] = await db.query(sql, [values]);
+
+            if (result.affectedRows === 0) {
+            return response.status(404).json({
+                sucesso: false,
+                mensagem: `Foto tarefa não encontrada!`
+                
+            });
+        }
         return response.status(200).json(
             {
             sucesso: true,

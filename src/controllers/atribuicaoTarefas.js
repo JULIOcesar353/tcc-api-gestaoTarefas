@@ -12,7 +12,7 @@ module.exports = {
 
             const [atribuicaoTarefas] = await db.query(sql);
 
-            
+
             return response.status(200).json(
                 {
                     sucesso: true,
@@ -30,10 +30,10 @@ module.exports = {
                 }
             );
         }
-    },    
+    },
     async cadastrarAtribuicaoTarefas(request, response) {
         try {
-            const {status, tarefaId, funcId} = request.body;
+            const { status, tarefaId, funcId } = request.body;
 
             const sql = `INSERT INTO ATRIBUICAO_TAREFAS 
                 (atr_tarefa_id, atr_funcionario_id, atr_status, atr_data_atribuicao)
@@ -41,7 +41,7 @@ module.exports = {
                 (?, ?, ?, NOW());`;
 
             const values = [tarefaId, funcId, status];
-            
+
             const [result] = await db.query(sql, values);
 
             const dados = {
@@ -67,8 +67,8 @@ module.exports = {
     },
     async editarAtribuicaoTarefas(request, response) {
         try {
-            
-            const {status, data_atribuicao} = request.body;
+
+            const { status, data_atribuicao } = request.body;
 
             const { id } = request.params;
 
@@ -93,10 +93,10 @@ module.exports = {
             }
 
             const dados = {
-                id,                
+                id,
                 status,
                 data_atribuicao
-                
+
             };
 
             return response.status(200).json(
@@ -118,6 +118,23 @@ module.exports = {
     },
     async apagarAtribuicaoTarefas(request, response) {
         try {
+
+            const { id } = request.params;
+
+            const sql = `
+                DELETE FROM atribuicao_tarefas
+                WHERE atr_id = ?
+                `;
+
+            const values = [id];
+            const [result] = await db.query(sql, [values]);
+
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Atribuição ${id} não encontrada`
+                });
+            }
             return response.status(200).json(
                 {
                     sucesso: true,

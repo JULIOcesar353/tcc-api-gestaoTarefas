@@ -7,11 +7,11 @@ const SetoresController = require('../controllers/setores');
 router.get('/tarefas', TarefasController.listarTarefas);
 router.post('/tarefas', TarefasController.cadastrarTarefas);
 router.patch('/tarefas/:id', TarefasController.editarTarefas);
-router.delete('/tarefas', TarefasController.apagarTarefas);
+router.delete('/tarefas/:id', TarefasController.apagarTarefas);
 
 router.get('/setores', SetoresController.listarSetores);
 router.post('/setores', SetoresController.cadastrarSetores);
 router.patch('/setores/:id', SetoresController.editarSetores);
-router.delete('/setores', SetoresController.apagarSetores);
+router.delete('/setores/:id', SetoresController.apagarSetores);
 
 module.exports = router;

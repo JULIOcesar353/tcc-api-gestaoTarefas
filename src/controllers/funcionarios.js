@@ -5,8 +5,17 @@ module.exports = {
     async listarFuncionarios(request, response) {
         try {
             const sql = `SELECT 
-                func_id, func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo = 1 AS func_ativo, func_data_criacao 
-            FROM FUNCIONARIOS;`;
+                func_id,
+                func_setor_id, 
+                func_crg_id, 
+                func_nome, 
+                func_email, 
+                func_senha, 
+                func_ativo = 1 AS func_ativo, 
+                func_data_criacao 
+            FROM FUNCIONARIOS
+            WHERE func_ativo = 1
+            ;`;
 
             const [funcionarios] = await db.query(sql);
 
@@ -119,18 +128,82 @@ module.exports = {
     //-----------------------EXCLUIR FUNCIONÁRIOS------------------------------
     async apagarFuncionarios(request, response) {
         try {
+
+            const {id} = request.params;
+
+            const sql = `
+                DELETE FROM funcionarios
+                WHERE func_id = ?
+                `;
+
+            const values = [id];
+
+            const [result] = await db.query(sql, values);
+
+            if(result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Funcionário ${id} não encontrado!`,
+                    dados: null
+            });
+            }
+
+
             return response.status(200).json(
                 {
                     sucesso: true,
-                    mensagem: 'Exclusão de funcionários realizada!',
+                    mensagem: `Funcionário ${id} excluído com sucesso`,
                     dados: null
                 }
             );
+
         } catch (error) {
             return response.status(500).json(
                 {
                     sucesso: false,
-                    mensagem: `Erro ao remover Funcionários ${error.mensage}`,
+                    mensagem: `Erro na requisição ${error.mensage}`,
+                    dados: error.message
+                }
+            );
+        }
+    },
+
+    async ocultarFuncionarios(request, response) {
+        try {
+            const ativo = false;
+            const {id} = request.params;
+            const sql = `
+            UPDATE funcionarios SET
+                func_ativo = ?
+            WHERE 
+                func_id = ?
+            `;
+
+            const values = [ativo, id];
+            const [result] = await db.query(sql, values);
+
+            if(result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Funcionário ${id} não encontrado!`,
+                    dados: null
+            });
+            }
+
+
+            return response.status(200).json(
+                {
+                    sucesso: true,
+                    mensagem: `Funcionário ${id} excluído com sucesso`,
+                    dados: null
+                }
+            );
+
+        } catch (error) {
+            return response.status(500).json(
+                {
+                    sucesso: false,
+                    mensagem: `Erro na requisição ${error.mensage}`,
                     dados: null
                 }
             );
