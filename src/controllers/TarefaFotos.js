@@ -124,7 +124,7 @@ module.exports = {
 // ------------ Excluir Foto das T arefas -------------
     async excluirtarefaFotos (request, response) {
       try{ 
-        const { id } = request.params;
+            const { id } = request.params;
 
             const sql = `
                 DELETE FROM tarefa_fotos

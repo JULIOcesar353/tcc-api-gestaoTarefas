@@ -132,7 +132,10 @@ module.exports = {
 
             const sql = `
                 DELETE FROM cargo_permissoes
-                WHERE crg_id = ? AND prm_id = ?
+                WHERE 
+                    crg_id = ?
+                AND 
+                    prm_id = ?
                 `;
 
             const [result] = await db.query(sql, [crg_id, prm_id]);
