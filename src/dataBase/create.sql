@@ -57,10 +57,10 @@ CREATE TABLE TAREFAS (
 
 CREATE TABLE ATRIBUICAO_TAREFAS (
     atr_id INT AUTO_INCREMENT PRIMARY KEY,
-    atr_tarefa_id INT NOT NULL,
+    fot_tarefa_id INT NOT NULL,
     atr_funcionario_id INT NOT NULL,
     atr_data_atribuicao DATETIME NOT NULL,
-    FOREIGN KEY (atr_tarefa_id) REFERENCES TAREFAS(tar_id),
+    FOREIGN KEY (fot_tarefa_id) REFERENCES TAREFAS(tar_id),
     FOREIGN KEY (atr_funcionario_id) REFERENCES FUNCIONARIOS(func_id)
 );
 
@@ -195,7 +195,7 @@ VALUES
 -- =========================
 -- 7. ATRIBUICAO_TAREFAS
 -- =========================
-INSERT INTO ATRIBUICAO_TAREFAS (atr_tarefa_id, atr_funcionario_id, atr_data_atribuicao)
+INSERT INTO ATRIBUICAO_TAREFAS (fot_tarefa_id, atr_funcionario_id, atr_data_atribuicao)
 VALUES
 (1, 4, NOW()),
 (2, 3, NOW()),

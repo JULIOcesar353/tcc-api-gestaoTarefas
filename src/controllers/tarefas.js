@@ -151,13 +151,13 @@ module.exports = {
 
             // Apagar atribuição da tarefa
             const sqlVerificaTarefaAtribuicao = `
-                SELECT COUNT(*) AS quantidade FROM atribuicao_tarefas WHERE atr_tarefa_id = ?
+                SELECT COUNT(*) AS quantidade FROM atribuicao_tarefas WHERE fot_tarefa_id = ?
             `;
 
             const [verificaTarefaAtribuicao] = await db.query(sqlVerificaTarefaAtribuicao, [id]);
             if (verificaTarefaAtribuicao[0].quantidade > 0) {
                 const sqlApagarAtribuicaoTarefa = `
-                    DELETE FROM atribuicao_tarefas WHERE atr_tarefa_id = ?
+                    DELETE FROM atribuicao_tarefas WHERE fot_tarefa_id = ?
                 `;
                 await db.query(sqlApagarAtribuicaoTarefa, [id]);
             }

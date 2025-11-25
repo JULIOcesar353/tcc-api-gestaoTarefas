@@ -56,11 +56,11 @@ CREATE TABLE TAREFAS (
 
 CREATE TABLE ATRIBUICAO_TAREFAS (
     atr_id INT AUTO_INCREMENT PRIMARY KEY,
-    atr_tarefa_id INT NOT NULL,
+    fot_tarefa_id INT NOT NULL,
     atr_funcionario_id INT NOT NULL,
     atr_data_atribuicao DATETIME NOT NULL, 
     atr_status TINYINT NOT NULL,
-    FOREIGN KEY (atr_tarefa_id) REFERENCES TAREFAS(tar_id),
+    FOREIGN KEY (fot_tarefa_id) REFERENCES TAREFAS(tar_id),
     FOREIGN KEY (atr_funcionario_id) REFERENCES FUNCIONARIOS(func_id)
 );
 

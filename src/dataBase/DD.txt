@@ -65,7 +65,7 @@ Fonte: Autoria própria
 Quadro 7 - Tabela ATRIBUICAO_TAREFAS
 Campo Lógico	Campo Físico	Tipo de dados	Tamanho do campo	PK	FK	Observações
 Id da atribuição	atr_id	INT		x		Auto-Incremento
-Id atribuição da tarefa	atr_tarefa_id	INT			x	
+Id atribuição da tarefa	fot_tarefa_id	INT			x	
 Id atribuição do funcionário	atr_funcionario_id	INT			x	
 Data de atribuição	atr_data_atribuicao	DATETIME				
 Fonte: Autoria própria

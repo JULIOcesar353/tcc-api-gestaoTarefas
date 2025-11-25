@@ -5,7 +5,7 @@ SELECT set_id, set_nome FROM SETORES;
 SELECT func_id, func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao FROM FUNCIONARIOS;
 SELECT crg_id, prm_id, crg_prm_cadastrar, crg_perm_editar, crg_prm_consultar FROM CARGO_PERMISSOES;
 SELECT tar_id, tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_status, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto FROM TAREFAS;
-SELECT atr_id, atr_tarefa_id, atr_funcionario_id, atr_data_atribuicao FROM ATRIBUICAO_TAREFAS;
+SELECT atr_id, fot_tarefa_id, atr_funcionario_id, atr_data_atribuicao FROM ATRIBUICAO_TAREFAS;
 SELECT fot_id, fot_tarefa_id, fot_nome, fot_descricao, fot_data_envio FROM TAREFA_FOTOS;
 
 -- SELECTs com INNER JOIN para tabelas com chave estrangeira
@@ -43,7 +43,7 @@ SELECT
     t.tar_id, t.tar_titulo,
     f.func_id, f.func_nome
 FROM ATRIBUICAO_TAREFAS at
-INNER JOIN TAREFAS t ON at.atr_tarefa_id = t.tar_id
+INNER JOIN TAREFAS t ON at.fot_tarefa_id = t.tar_id
 INNER JOIN FUNCIONARIOS f ON at.atr_funcionario_id = f.func_id;
 
 -- TAREFA_FOTOS com TAREFAS
