@@ -167,7 +167,7 @@ module.exports = {
             );
         }
     },
-
+    //-----------------------OCULTAR FUNCIONÁRIOS------------------------------
     async ocultarFuncionarios(request, response) {
         try {
             const ativo = false;
