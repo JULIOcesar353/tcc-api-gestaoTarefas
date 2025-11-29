@@ -40,7 +40,7 @@ module.exports = {
     //---------------------CADASTRAR FUNCIONÁRIOS------------------------------
     async cadastrarFuncionarios(request, response) {
         try {
-            const { setor, cargo, nome, email, senha, ativo, data} = request.body;
+            const { setor, cargo, nome, email, senha, ativo, data } = request.body;
 
             const sql = `INSERT INTO FUNCIONARIOS 
                 (func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao) 
@@ -50,7 +50,7 @@ module.exports = {
             const values = [setor, cargo, nome, email, senha, ativo, data];
             const [result] = await db.query(sql, values);
 
-            const dados = {  
+            const dados = {
                 id: result.insertId,
                 nome,
                 email,
@@ -78,7 +78,7 @@ module.exports = {
     //-----------------------EDITAR FUNCIONÁRIOS-------------------------------
     async editarFuncionarios(request, response) {
         try {
-            const {setor, cargo, nome, email, senha, ativo, data} = request.body;
+            const { setor, cargo, nome, email, senha, ativo, data } = request.body;
 
             const { id } = request.params;
 
@@ -129,7 +129,7 @@ module.exports = {
     async apagarFuncionarios(request, response) {
         try {
 
-            const {id} = request.params;
+            const { id } = request.params;
 
             const sql = `
                 DELETE FROM funcionarios
@@ -140,12 +140,12 @@ module.exports = {
 
             const [result] = await db.query(sql, values);
 
-            if(result.affectedRows === 0) {
+            if (result.affectedRows === 0) {
                 return response.status(404).json({
                     sucesso: false,
                     mensagem: `Funcionário ${id} não encontrado!`,
                     dados: null
-            });
+                });
             }
 
 
@@ -171,7 +171,7 @@ module.exports = {
     async ocultarFuncionarios(request, response) {
         try {
             const ativo = false;
-            const {id} = request.params;
+            const { id } = request.params;
             const sql = `
             UPDATE funcionarios SET
                 func_ativo = ?
@@ -182,12 +182,12 @@ module.exports = {
             const values = [ativo, id];
             const [result] = await db.query(sql, values);
 
-            if(result.affectedRows === 0) {
+            if (result.affectedRows === 0) {
                 return response.status(404).json({
                     sucesso: false,
                     mensagem: `Funcionário ${id} não encontrado!`,
                     dados: null
-            });
+                });
             }
 
 
