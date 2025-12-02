@@ -23,7 +23,7 @@ module.exports = {
 
         const values = [];
 
-        // Se o filtro for enviado, adiciona ao SQL
+       
         if (setor_id) {
             sql += ` AND func_setor_id = ?`;
             values.push(setor_id);
