@@ -3,8 +3,12 @@ const db = require('../dataBase/connection.js');
 module.exports = {
     //----------------------LISTAR FUNCIONÁRIOS--------------------------------
     async listarFuncionarios(request, response) {
-        try {
-            const sql = `SELECT 
+    try {
+
+        const { setor_id } = request.query; // vem da URL: /funcionarios?setor_id=3
+
+        let sql = `
+            SELECT 
                 func_id,
                 func_setor_id, 
                 func_crg_id, 
@@ -15,28 +19,34 @@ module.exports = {
                 func_data_criacao 
             FROM FUNCIONARIOS
             WHERE func_ativo = 1
-            ;`;
+        `;
 
-            const [funcionarios] = await db.query(sql);
+        const values = [];
 
-            return response.status(200).json(
-                {
-                    sucesso: true,
-                    mensagem: 'Lista de Funcionários obtida com sucesso',
-                    items: funcionarios.length,
-                    dados: funcionarios
-                }
-            );
-        } catch (error) {
-            return response.status(500).json(
-                {
-                    sucesso: false,
-                    mensagem: `Erro ao listar Funcionários ${error.mensage}`,
-                    dados: null
-                }
-            );
+        // Se o filtro for enviado, adiciona ao SQL
+        if (setor_id) {
+            sql += ` AND func_setor_id = ?`;
+            values.push(setor_id);
         }
-    },
+
+        const [funcionarios] = await db.query(sql, values);
+
+        return response.status(200).json({
+            sucesso: true,
+            mensagem: 'Lista de Funcionários obtida com sucesso',
+            items: funcionarios.length,
+            dados: funcionarios
+        });
+
+    } catch (error) {
+        return response.status(500).json({
+            sucesso: false,
+            mensagem: `Erro ao listar Funcionários: ${error.message}`,
+            dados: null
+        });
+    }
+},
+
     //---------------------CADASTRAR FUNCIONÁRIOS------------------------------
     async cadastrarFuncionarios(request, response) {
         try {

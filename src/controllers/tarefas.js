@@ -5,16 +5,65 @@ module.exports = {
     //------------ Listar Tarefas -------------
     async listarTarefas(request, response) {
         try {
-            const sql = `SELECT 
-            tar_id, tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto = 1 AS tar_exige_foto
-        FROM TAREFAS;`;
 
-            const [tarefas] = await db.query(sql);
+            const { setor, prioridade, exige_foto, responsavel, status, atrasadas } = request.query;
+
+            let sql = `
+                SELECT 
+                    t.tar_id,
+                    t.tar_setor_id,
+                    t.tar_criado_por,
+                    t.tar_titulo,
+                    t.tar_descricao,
+                    t.tar_prioridade,
+                    t.tar_prazo,
+                    t.tar_estimativa_minutos,
+                    t.tar_data_criacao,
+                    t.tar_exige_foto,
+                    a.atr_status,
+                    a.atr_funcionario_id
+                FROM TAREFAS t
+                LEFT JOIN ATRIBUICAO_TAREFAS a ON a.fot_tarefa_id = t.tar_id
+                WHERE 1 = 1
+            `;
+
+            const values = [];
+
+            if (setor) {
+                sql += " AND t.tar_setor_id = ? ";
+                values.push(setor);
+            }
+
+            if (prioridade) {
+                sql += " AND t.tar_prioridade = ? ";
+                values.push(prioridade);
+            }
+
+            if (exige_foto) {
+                sql += " AND t.tar_exige_foto = ? ";
+                values.push(exige_foto);
+            }
+
+            if (responsavel) {
+                sql += " AND a.atr_funcionario_id = ? ";
+                values.push(responsavel);
+            }
+
+            if (status) {
+                sql += " AND a.atr_status = ? ";
+                values.push(status);
+            }
+
+            if  (atrasadas == '1'){
+                sql += " AND t.tar_prazo < NOW() ";
+            }
+
+            const [tarefas] = await db.query(sql, values);
 
             return response.status(200).json(
                 {
                     sucesso: true,
-                    mensagem: 'Lista de tarefas obtida com sucesso',
+                    mensagem: 'Lista de tarefas filtrada com sucesso',
                     items: tarefas.length,
                     dados: tarefas
                 }
@@ -25,26 +74,25 @@ module.exports = {
                     sucesso: false,
                     mensagem: `Erro ao listar tarefas: ${error.message} `,
                     dados: null
-                }
-            );
+                });
         }
     },
 
     // ------------ Cadastrar Tarefas -------------
     async cadastrarTarefas(request, response) {
         try {
-            const {setor, criado, titulo, descricao, prioridade, estimativa, foto} = request.body;
-            
+            const { setor, criado, titulo, descricao, prioridade, estimativa, foto } = request.body;
+
             const sql = `INSERT INTO TAREFAS 
                     (tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto)
                 VALUES
                     (?,?,?,?,?, DATE_ADD(NOW(), INTERVAL 1 DAY),?,NOW(), 0);`;
-            
-            const values = [setor, criado, titulo, descricao, prioridade , estimativa, foto];
+
+            const values = [setor, criado, titulo, descricao, prioridade, estimativa, foto];
 
             const [result] = await db.query(sql, values);
 
-            const dados ={
+            const dados = {
                 id: result.insertId,
                 titulo,
                 descricao,
@@ -73,9 +121,9 @@ module.exports = {
     // ------------ Editar Tarefas -------------
     async editarTarefas(request, response) {
         try {
-            const {setor, criado, titulo, descricao, prioridade, prazo, estimativa, data, foto} = request.body;
+            const { setor, criado, titulo, descricao, prioridade, prazo, estimativa, data, foto } = request.body;
 
-            const {id} = request.params;
+            const { id } = request.params;
 
             const sql = `
                 UPDATE TAREFAS SET
@@ -86,7 +134,7 @@ module.exports = {
                     tar_id = ?;
             `;
 
-            const values = [setor, criado, titulo, descricao, prioridade, prazo,  estimativa, data, foto, id];
+            const values = [setor, criado, titulo, descricao, prioridade, prazo, estimativa, data, foto, id];
 
             const [result] = await db.query(sql, values);
 
@@ -133,14 +181,14 @@ module.exports = {
 
             const { id } = request.params;
 
-            
+
             // Apagar imagens tarefa
             const sqlVerificaTarefaFoto = `
                 SELECT COUNT(*) AS quantidade FROM tarefa_fotos WHERE fot_tarefa_id = ?
             `;
 
             const [verificaTarefaFoto] = await db.query(sqlVerificaTarefaFoto, [id]);
-            
+
             if (verificaTarefaFoto[0].quantidade > 0) {
                 const sqlApagarFotosTarefa = `
                     DELETE FROM tarefa_fotos WHERE fot_tarefa_id = ?
@@ -171,11 +219,11 @@ module.exports = {
             const [result] = await db.query(sql, [values]);
 
             if (result.affectedRows === 0) {
-            return response.status(404).json({
-                sucesso: false,
-                mensagem: `Tarefa não encontrada!`                
-            });
-        }
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `Tarefa não encontrada!`
+                });
+            }
             return response.status(200).json(
                 {
                     sucesso: true,
