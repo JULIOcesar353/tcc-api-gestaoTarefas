@@ -6,7 +6,7 @@ module.exports = {
 
             const sql = `
         SELECT
-            crg_id = 1 AS crg_id, prm_id = 1 AS prm_id, crg_prm_cadastrar = 1 AS crg_prm_cadastrar, crg_perm_editar = 1 AS crg_perm_editar, crg_prm_consultar = 1 AS crg_prm_consultar
+            crg_id = 1 AS crg_id, prm_id = 1 AS prm_id, crg_prm_cadastrar = 1 AS crg_prm_cadastrar, crg_prm_editar = 1 AS crg_prm_editar, crg_prm_consultar = 1 AS crg_prm_consultar
         FROM CARGO_PERMISSOES;
         `;
 
@@ -38,7 +38,7 @@ module.exports = {
             const { cargo, permissao, cadastrar, editar, consultar } = request.body;
 
             const sql = `INSERT INTO CARGO_PERMISSOES 
-                (crg_id, prm_id, crg_prm_cadastrar, crg_perm_editar, crg_prm_consultar) 
+                (crg_id, prm_id, crg_prm_cadastrar, crg_prm_editar, crg_prm_consultar) 
             VALUES
                 (?, ?, ?, ?, ?);`;
 
@@ -80,7 +80,7 @@ module.exports = {
             const sql = `
                 UPDATE CARGO_PERMISSOES SET
                     crg_prm_cadastrar = ?,
-                    crg_perm_editar = ?,
+                    crg_prm_editar = ?,
                     crg_prm_consultar = ?
                 WHERE
                     crg_id = ?

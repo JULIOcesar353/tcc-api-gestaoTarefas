@@ -5,7 +5,7 @@ SELECT crg_id, crg_nome FROM CARGOS;
 SELECT prm_id, prm_nome FROM PERMISSOES;
 SELECT set_id, set_nome FROM SETORES;
 SELECT func_id, func_setor_id, func_crg_id, func_nome, func_email, func_senha, func_ativo, func_data_criacao FROM FUNCIONARIOS;
-SELECT crg_id, prm_id, crg_prm_cadastrar, crg_perm_editar, crg_prm_consultar FROM CARGO_PERMISSOES;
+SELECT crg_id, prm_id, crg_prm_cadastrar, crg_prm_editar, crg_prm_consultar FROM CARGO_PERMISSOES;
 SELECT tar_id, tar_setor_id, tar_criado_por, tar_titulo, tar_descricao, tar_prioridade, tar_prazo, tar_estimativa_minutos, tar_data_criacao, tar_exige_foto FROM TAREFAS;
 SELECT atr_id, fot_tarefa_id, atr_funcionario_id, atr_data_atribuicao, atr_status FROM ATRIBUICAO_TAREFAS;
 SELECT fot_id, fot_tarefa_id, fot_nome, fot_descricao, fot_data_envio FROM TAREFA_FOTOS;
@@ -27,7 +27,7 @@ INNER JOIN CARGOS c ON f.func_crg_id = c.crg_id;
 SELECT 
     cp.crg_id, c.crg_nome,
     cp.prm_id, p.prm_nome,
-    cp.crg_prm_cadastrar, cp.crg_perm_editar, cp.crg_prm_consultar
+    cp.crg_prm_cadastrar, cp.crg_prm_editar, cp.crg_prm_consultar
 FROM CARGO_PERMISSOES cp
 INNER JOIN CARGOS c ON cp.crg_id = c.crg_id
 INNER JOIN PERMISSOES p ON cp.prm_id = p.prm_id;
