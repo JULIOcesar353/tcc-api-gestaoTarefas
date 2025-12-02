@@ -1,4 +1,5 @@
 const db = require ('../dataBase/connection')
+const { gerarUrl } = require('../utils/gerarUrl');
 
 module.exports = {
     async listarTarefaFotos (request, response) {
@@ -11,15 +12,20 @@ module.exports = {
         `;
 
         const [tarefafotos] = await db.query(sql);
+        const nItens =  tarefafotos.length;
+
+        const dados = tarefafotos.map(tarefa => ({
+            ...tarefa,
+            fot_nome: gerarUrl(tarefa.fot_nome, 'tarefas', 'sem.jpg')
+        }));
 
         return response.status(200).json(
             {
             sucesso: true,
             mensagem: 'Foto de Tarefas obtida com sucesso',
-            itens: tarefafotos.length,
-            dados: tarefafotos
-        }
-    );
+            nItens,
+            dados
+        });
     }  catch (error) {
         return response.status(500).json(
             {
@@ -30,25 +36,24 @@ module.exports = {
         );
     }
     },
-
 // ------------ Cadastrar Fotos de Tarefas -------------
     async cadastrarFotosTarefas (request, response) {
       try{ 
         const {tarefa, nome, descricao} = request.body;
+        const imagem = request.file;
 
         const sql = `INSERT INTO TAREFA_FOTOS 
             (fot_tarefa_id, fot_nome, fot_descricao, fot_data_envio)
         VALUES
             (?, ?, ?, NOW());`;
 
-        const values = [tarefa, nome, descricao];
+        const values = [tarefa, imagem.filename, descricao];
 
         const [result] = await db.query(sql, values);
 
         const dados = {
             id: result.insertId,
-            nome, 
-            descricao
+            descricao   
         };
         return response.status(200).json(
             {
