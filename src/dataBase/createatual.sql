@@ -31,7 +31,7 @@ CREATE TABLE CARGO_PERMISSOES (
     crg_id INT,
     prm_id INT,
     crg_prm_cadastrar BIT NOT NULL,
-    crg_perm_editar BIT NOT NULL,
+    crg_prm_editar BIT NOT NULL,
     crg_prm_consultar BIT NOT NULL,
     PRIMARY KEY (crg_id, prm_id),
     FOREIGN KEY (crg_id) REFERENCES CARGOS(crg_id),
@@ -136,7 +136,7 @@ VALUES
 -- 5. CARGO_PERMISSOES
 -- =========================
 -- Gerente: todas as permissões
-INSERT INTO CARGO_PERMISSOES (crg_id, prm_id, crg_prm_cadastrar, crg_perm_editar, crg_prm_consultar) VALUES
+INSERT INTO CARGO_PERMISSOES (crg_id, prm_id, crg_prm_cadastrar, crg_prm_editar, crg_prm_consultar) VALUES
 (1, 1, 1, 1, 1),
 (1, 2, 1, 1, 1),
 (1, 3, 1, 1, 1),

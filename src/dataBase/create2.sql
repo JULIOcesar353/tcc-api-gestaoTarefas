@@ -32,7 +32,7 @@ CREATE TABLE CARGO_PERMISSOES (
     crg_id INT,
     prm_id INT,
     crg_prm_cadastrar BIT NOT NULL,
-    crg_perm_editar BIT NOT NULL,
+    crg_prm_editar BIT NOT NULL,
     crg_prm_consultar BIT NOT NULL,
     PRIMARY KEY (crg_id, prm_id),
     FOREIGN KEY (crg_id) REFERENCES CARGOS(crg_id),

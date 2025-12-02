@@ -8,7 +8,7 @@ Campo Lógico	Campo Físico	Tipo de dados	Tamanho do campo	PK	FK	Observações
 Id do cargo	crg_id	INT		x	x	
 Id da permissão	prm_id	INT		x	x	
 Cadastrar permissão de cargo	crg_prm_cadastrar	BIT				0 – Não, 1 - Sim
-Editar permissão de cargo	crg_perm_editar	BIT				0 – Não, 1 – Sim
+Editar permissão de cargo	crg_prm_editar	BIT				0 – Não, 1 – Sim
 Consultar permissão de cargo	crg_prm_consultar	BIT				0 – Não, 1 - Sim
 Fonte: Autoria própria
 
