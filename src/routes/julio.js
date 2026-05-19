@@ -4,12 +4,35 @@ const router = express.Router();
 const FuncionariosController = require("../controllers/funcionarios");
 const CargosController = require("../controllers/cargos");
 
-router.get("/funcionarios", FuncionariosController.listarFuncionarios);
-router.post("/funcionarios", FuncionariosController.cadastrarFuncionarios);
-router.patch("/funcionarios/:id", FuncionariosController.editarFuncionarios);
-router.delete("/funcionarios/:id", FuncionariosController.apagarFuncionarios);
+const { autenticarJWT } = require("../auth/authMiddleware");
+
+router.get(
+  "/funcionarios",
+  autenticarJWT,
+  FuncionariosController.listarFuncionarios,
+);
+
+router.post(
+  "/funcionarios",
+  autenticarJWT,
+  FuncionariosController.cadastrarFuncionarios,
+);
+
+router.patch(
+  "/funcionarios/:id",
+  autenticarJWT,
+  FuncionariosController.editarFuncionarios,
+);
+
+router.delete(
+  "/funcionarios/:id",
+  autenticarJWT,
+  FuncionariosController.apagarFuncionarios,
+);
+
 router.delete(
   "/funcionarios/del/:id",
+  autenticarJWT,
   FuncionariosController.ocultarFuncionarios,
 );
 
