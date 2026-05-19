@@ -9,10 +9,12 @@ const { autenticarJWT } = require("../auth/authMiddleware");
 const uploadImage = require("../middleware/uploadHelper");
 const upload = uploadImage("usuarios");
 
+
 router.get("/tarefas", TarefasController.listarTarefas);
 router.post("/tarefas", TarefasController.cadastrarTarefas);
 router.patch("/tarefas/:id", TarefasController.editarTarefas);
 router.delete("/tarefas/:id", TarefasController.apagarTarefas);
+router.put('/tarefas/aceitar/:id', TarefasController.aceitarTarefa);
 
 router.get(
   "/minhas-tarefas/verificar",
