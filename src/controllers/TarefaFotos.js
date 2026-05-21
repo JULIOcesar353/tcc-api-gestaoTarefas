@@ -5,17 +5,25 @@ module.exports = {
   async listarTarefaFotos(request, response) {
     try {
       const sql = `
-        SELECT 
-        fot_id, fot_tarefa_id, fot_nome, fot_descricao, fot_data_envio 
-        FROM TAREFA_FOTOS;
-        `;
+      SELECT 
+        fot_id, 
+        fot_tarefa_id, 
+        fot_nome, 
+        fot_descricao, 
+        fot_data_envio 
+      FROM TAREFA_FOTOS;
+    `;
 
       const [tarefafotos] = await db.query(sql);
       const nItens = tarefafotos.length;
 
+      const API_URL = process.env.API_BASE_URL || "http://localhost:3333";
+
       const dados = tarefafotos.map((tarefa) => ({
         ...tarefa,
-        fot_nome: gerarUrl(tarefa.fot_nome, "tarefas", "sem.jpg"),
+        fot_nome: tarefa.fot_nome
+          ? `${API_URL}/uploads/tarefas/${tarefa.fot_nome}`
+          : null,
       }));
 
       return response.status(200).json({
@@ -32,6 +40,7 @@ module.exports = {
       });
     }
   },
+
   // ------------ Cadastrar Fotos de Tarefas -------------
   async cadastrarFotosTarefas(request, response) {
     try {
@@ -83,7 +92,7 @@ module.exports = {
       });
     }
   },
-  
+
   // ------------ Editar Foto das Tarefas -------------
   async editartarefaFotos(request, response) {
     try {
