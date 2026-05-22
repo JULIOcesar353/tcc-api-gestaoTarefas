@@ -1,5 +1,7 @@
 const db = require("../dataBase/connection");
 const { gerarUrl } = require("../utils/gerarUrl");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   async listarTarefaFotos(request, response) {
@@ -17,14 +19,26 @@ module.exports = {
       const [tarefafotos] = await db.query(sql);
       const nItens = tarefafotos.length;
 
-      const API_URL = process.env.API_BASE_URL || "http://localhost:3333";
+      const baseUrl = `${request.protocol}://${request.get("host")}`;
 
-      const dados = tarefafotos.map((tarefa) => ({
-        ...tarefa,
-        fot_nome: tarefa.fot_nome
-          ? `${API_URL}/uploads/tarefas/${tarefa.fot_nome}`
-          : null,
-      }));
+      const dados = tarefafotos.map((foto) => {
+        const caminhoFisico = path.join(
+          process.cwd(),
+          "src",
+          "uploads",
+          "tarefas",
+          foto.fot_nome || "",
+        );
+
+        const arquivoExiste = foto.fot_nome && fs.existsSync(caminhoFisico);
+
+        return {
+          ...foto,
+          fot_nome: arquivoExiste
+            ? `${baseUrl}/uploads/tarefas/${foto.fot_nome}`
+            : null,
+        };
+      });
 
       return response.status(200).json({
         sucesso: true,
