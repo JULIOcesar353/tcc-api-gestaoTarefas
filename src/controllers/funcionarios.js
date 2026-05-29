@@ -8,30 +8,36 @@ module.exports = {
 
       let sql = `
       SELECT 
-        func_id,
-        func_setor_id, 
-        func_crg_id, 
-        func_nome, 
-        func_email,             
-        CAST(func_ativo AS UNSIGNED) AS func_ativo,
-        func_data_criacao 
-      FROM FUNCIONARIOS
-      WHERE 1 = 1
-    `;
+        f.func_id,
+        f.func_setor_id, 
+        f.func_crg_id, 
+        f.func_nome, 
+        f.func_email,             
+        CAST(f.func_ativo AS UNSIGNED) AS func_ativo,
+        f.func_data_criacao,
+
+        u.usu_id,
+        u.usu_login,
+        CAST(u.usu_ativo AS UNSIGNED) AS usu_ativo
+
+        FROM FUNCIONARIOS f
+        LEFT JOIN USUARIOS u
+        ON u.usu_func_id = f.func_id
+        WHERE 1 = 1
+      `;
 
       const values = [];
-
       if (setor_id) {
-        sql += ` AND func_setor_id = ?`;
+        sql += ` AND f.func_setor_id = ?`;
         values.push(setor_id);
       }
 
       if (ativo !== undefined && ativo !== "") {
-        sql += ` AND func_ativo = ?`;
+        sql += ` AND f.func_ativo = ?`;
         values.push(Number(ativo));
       }
 
-      sql += ` ORDER BY func_id DESC`;
+      sql += ` ORDER BY f.func_id DESC`;
 
       const [funcionarios] = await db.query(sql, values);
 
