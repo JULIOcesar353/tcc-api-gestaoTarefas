@@ -1,0 +1,11 @@
+
+
+chamada api
+apigestoon.kinghost.net:21129
+
+ssh
+host: ftp.apigestoon.kinghost.net
+login: apigestoon
+senha: 
+
+ls pm2 list logs
