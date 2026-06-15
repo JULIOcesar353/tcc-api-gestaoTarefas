@@ -3,9 +3,14 @@
 chamada api
 apigestoon.kinghost.net:21129
 
-ssh
+ssh -- PARA CONECTAR FileZilla/putty
 host: ftp.apigestoon.kinghost.net
 login: apigestoon
-senha: 
+senha: Paulo5571
+
+banco kinghost
+apigestoon
+backgestoon5829
+
 
 ls pm2 list logs
