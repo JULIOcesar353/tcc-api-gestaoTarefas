@@ -22,6 +22,9 @@ app.get("/", (request, response) => {
 // Rotas da API depois
 app.use(router);
 
+// //rota kinghost
+// app.use('/apigestao',router);
+
 const porta = process.env.PORT || 3333;
 const serverHost = process.env.SERVER || "localhost";
 

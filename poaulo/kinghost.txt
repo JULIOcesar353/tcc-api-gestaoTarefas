@@ -14,3 +14,6 @@ backgestoon5829
 
 
 ls pm2 list logs
+
+novo endereço após habilitar ssl no node 
+https://apigestoon.kinghost.net/apigestao
