@@ -1,24 +1,19 @@
 const jwt = require("jsonwebtoken");
 
 /**
- * Middleware de autenticação JWT
  *
- * Valida o token JWT extraído do header Authorization
- * Se válido, adiciona os dados do usuário em req.usuario
- * Se inválido ou ausente, retorna erro apropriado
+ * @param {Object} req 
+ * @param {Object} res 
+ * @param {Function} next 
  *
- * @param {Object} req - Objeto da requisição Express
- * @param {Object} res - Objeto da resposta Express
- * @param {Function} next - Função para passar para o próximo middleware
- *
- * @returns {void} Chama next() se autenticado, ou envia erro se não
+ * @returns {void}
  */
 function autenticarJWT(req, res, next) {
   try {
-    // Extrair o header Authorization
+    
     const authHeader = req.headers["authorization"];
 
-    // Verificar se o header existe
+    
     if (!authHeader) {
       return res.status(401).json({
         erro: "Token não fornecido",
@@ -26,7 +21,7 @@ function autenticarJWT(req, res, next) {
       });
     }
 
-    // Validar formato "Bearer TOKEN"
+    
     const partes = authHeader.split(" ");
 
     if (partes.length !== 2 || partes[0] !== "Bearer") {
@@ -38,7 +33,7 @@ function autenticarJWT(req, res, next) {
 
     const token = partes[1];
 
-    // Validar se o token está vazio
+   
     if (!token || token.trim() === "") {
       return res.status(401).json({
         erro: "Token vazio",
@@ -46,7 +41,7 @@ function autenticarJWT(req, res, next) {
       });
     }
 
-    // Obter a SECRET do arquivo .env
+    
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
@@ -59,21 +54,21 @@ function autenticarJWT(req, res, next) {
       });
     }
 
-    // Verificar e decodificar o token
+    
     const usuarioData = jwt.verify(token, secret, {
-      algorithms: ["HS256"], // Aceita apenas algoritmos seguros
+      algorithms: ["HS256"], 
     });
 
-    // Adicionar os dados do usuário na requisição para uso nas rotas
+    
     req.usuario = usuarioData;
 
-    // Chamar o próximo middleware
+   
     next();
   } catch (erro) {
-    // Tratamento de erros específicos de JWT
+    
 
     if (erro.name === "TokenExpiredError") {
-      // Token expirado
+     
       return res.status(401).json({
         erro: "Token expirado",
         mensagem: "Faça login novamente para gerar um novo token",
@@ -81,7 +76,7 @@ function autenticarJWT(req, res, next) {
     }
 
     if (erro.name === "JsonWebTokenError") {
-      // Token inválido ou malformado
+      
       return res.status(403).json({
         erro: "Token inválido",
         mensagem: "Token não pôde ser verificado",
@@ -89,14 +84,14 @@ function autenticarJWT(req, res, next) {
     }
 
     if (erro.name === "NotBeforeError") {
-      // Token ainda não é válido
+     
       return res.status(403).json({
         erro: "Token não é válido ainda",
         mensagem: "Aguarde o tempo de ativação do token",
       });
     }
 
-    // Erro genérico desconhecido
+    
     console.error("Erro na autenticação:", erro.message);
     return res.status(403).json({
       erro: "Erro na autenticação",
@@ -118,11 +113,9 @@ function autenticarJWT(req, res, next) {
 function autenticarComRole(rolesPermitidas = []) {
   return (req, res, next) => {
     try {
-      // Primeiro, autenticar o JWT
+      
       autenticarJWT(req, res, () => {
-        // Se chegou aqui, o JWT é válido
-
-        // Verificar se o usuário tem um role
+       
         if (!req.usuario.role) {
           return res.status(403).json({
             erro: "Permissão negada",
@@ -130,7 +123,7 @@ function autenticarComRole(rolesPermitidas = []) {
           });
         }
 
-        // Verificar se o role do usuário está na lista de roles permitidas
+       
         if (!rolesPermitidas.includes(req.usuario.role)) {
           return res.status(403).json({
             erro: "Acesso proibido",
@@ -138,7 +131,7 @@ function autenticarComRole(rolesPermitidas = []) {
           });
         }
 
-        // Se chegou aqui, usuário autenticado e autorizado
+        
         next();
       });
     } catch (erro) {
@@ -150,7 +143,7 @@ function autenticarComRole(rolesPermitidas = []) {
   };
 }
 
-// Exportar como módulos CommonJS
+
 module.exports = {
   autenticarJWT,
   autenticarComRole,
