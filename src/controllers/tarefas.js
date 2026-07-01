@@ -8,24 +8,25 @@ module.exports = {
         request.query;
 
       let sql = `
-      SELECT 
-        t.tar_id,
-        t.tar_setor_id,
-        t.tar_criado_por,
-        t.tar_titulo,
-        t.tar_descricao,
-        t.tar_prioridade,
-        t.tar_estimativa_minutos,
-        t.tar_data_criacao,
-        t.tar_exige_foto,
+      SELECT
+          t.tar_id,
+          t.tar_setor_id,
+          t.tar_criado_por,
+          t.tar_titulo,
+          t.tar_descricao,
+          t.tar_prioridade,
+          t.tar_estimativa_minutos,
+          t.tar_data_criacao,
+          CAST(t.tar_exige_foto AS UNSIGNED) AS tar_exige_foto,
+          a.atr_status,
+          a.atr_funcionario_id,
 
-        a.atr_status,
-        a.atr_funcionario_id,
+          s.set_nome,
 
-        s.set_nome,
+          criador.func_nome AS usu_nome,
+          responsavel.func_nome AS responsavel_nome,
 
-        criador.func_nome AS usu_nome,
-        responsavel.func_nome AS responsavel_nome
+          tf.fot_nome
 
       FROM TAREFAS t
 
@@ -41,8 +42,20 @@ module.exports = {
       LEFT JOIN FUNCIONARIOS responsavel
         ON responsavel.func_id = a.atr_funcionario_id
 
-      WHERE 1 = 1
-    `;
+        LEFT JOIN (
+          SELECT
+            fot_tarefa_id,
+            MAX(fot_id) AS ultima_foto_id
+            FROM tarefa_fotos
+            GROUP BY fot_tarefa_id
+            ) ultima_foto
+            ON ultima_foto.fot_tarefa_id = t.tar_id
+
+            LEFT JOIN tarefa_fotos tf
+              ON tf.fot_id = ultima_foto.ultima_foto_id
+
+          WHERE 1 = 1
+        `;
 
       const values = [];
 
